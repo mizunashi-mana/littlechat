@@ -23,7 +23,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                    'room.incremental': 'true',
+                        'room.incremental': 'true',
                 ]
             }
         }
@@ -56,6 +56,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     compileOnly "javax.annotation:javax.annotation-api:$versions.annotation"
 
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"

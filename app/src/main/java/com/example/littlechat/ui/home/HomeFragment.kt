@@ -1,36 +1,35 @@
-package com.example.littlechat.ui.login
+package com.example.littlechat.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.littlechat.R
-import com.example.littlechat.databinding.LoginFragmentBinding
+import com.example.littlechat.databinding.HomeFragmentBinding
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class LoginFragment : DaggerFragment() {
+class HomeFragment : DaggerFragment() {
     @Module
     abstract class InjectorModule {
         @Suppress("unused")
         @ContributesAndroidInjector
-        abstract fun contributeAndroidInjector(): LoginFragment
+        abstract fun contributeAndroidInjector(): HomeFragment
     }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel: LoginViewModel by viewModels {
+    private val viewModel: HomeViewModel by viewModels {
         viewModelFactory
     }
 
-    private lateinit var binding: LoginFragmentBinding
+    private lateinit var binding: HomeFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +37,7 @@ class LoginFragment : DaggerFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.login_fragment,
+            R.layout.home_fragment,
             container,
             false
         )
@@ -49,28 +48,13 @@ class LoginFragment : DaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.inputUserId.addTextChangedListener {
-            afterInputChanged()
-        }
-
-        binding.inputPassword.addTextChangedListener {
-            afterInputChanged()
-        }
-
-        binding.buttonLogin.setOnClickListener {
-            afterLogin()
+        binding.buttonLogout.setOnClickListener {
+            afterLogout()
         }
     }
 
-    private fun afterInputChanged() {
-        viewModel.loginDataChanged(
-            binding.inputUserId.text.toString(),
-            binding.inputPassword.text.toString()
-        )
-    }
-
-    private fun afterLogin() {
+    private fun afterLogout() {
         findNavController()
-            .navigate(LoginFragmentDirections.actionLogin())
+            .navigate(HomeFragmentDirections.actionLogout())
     }
 }

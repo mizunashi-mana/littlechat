@@ -2,6 +2,8 @@ package com.example.littlechat.module
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.littlechat.ui.chat.ChatViewModel
+import com.example.littlechat.ui.home.HomeViewModel
 import com.example.littlechat.ui.login.LoginViewModel
 import dagger.MapKey
 import dagger.Module
@@ -19,7 +21,9 @@ annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
 @Module(
     includes = [
-        LoginViewModel.ProviderModule::class
+        LoginViewModel.ProviderModule::class,
+        ChatViewModel.ProviderModule::class,
+        HomeViewModel.ProviderModule::class
     ]
 )
 class ViewModelModule {

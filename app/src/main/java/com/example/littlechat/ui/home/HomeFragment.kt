@@ -51,6 +51,11 @@ class HomeFragment : DaggerFragment() {
         binding.buttonLogout.setOnClickListener {
             afterLogout()
         }
+
+        binding.buttonGotoNext.setOnClickListener {
+            findNavController()
+                .navigate(HomeFragmentDirections.actionChat("dummyGroupId"))
+        }
     }
 
     private fun afterLogout() {

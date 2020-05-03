@@ -16,4 +16,17 @@ class ChatViewModel @Inject constructor() : ViewModel() {
         @ViewModelKey(ChatViewModel::class)
         abstract fun provideViewModel(viewModel: ChatViewModel): ViewModel
     }
+
+    private lateinit var mGroupId: String
+    val groupId: String
+        get() = mGroupId
+
+    private lateinit var mGroupDisplayName: String
+    val groupDisplayName: String
+        get() = mGroupDisplayName
+
+    fun setNavArgs(args: ChatFragmentArgs) {
+        mGroupId = args.groupId
+        mGroupDisplayName = groupId
+    }
 }

@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.setupWithNavController
 import com.example.littlechat.R
 import com.example.littlechat.databinding.ChatFragmentBinding
 import dagger.Module
@@ -30,6 +33,8 @@ class ChatFragment : DaggerFragment() {
 
     private lateinit var binding: ChatFragmentBinding
 
+    private val navArgs by navArgs<ChatFragmentArgs>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,10 +45,15 @@ class ChatFragment : DaggerFragment() {
             container,
             false
         )
+
+        binding.toolbarContainer.mainToolbar
+            .setupWithNavController(findNavController())
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.setNavArgs(navArgs)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
     }

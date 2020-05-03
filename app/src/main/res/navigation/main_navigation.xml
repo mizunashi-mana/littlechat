@@ -15,6 +15,10 @@
             app:destination="@id/login_navigation"
             app:popUpTo="@id/main_navigation"
             app:launchSingleTop="true" />
+
+        <action
+            android:id="@+id/action_chat"
+            app:destination="@id/chat_fragment" />
     </fragment>
 
     <fragment
@@ -22,6 +26,9 @@
         android:name="com.example.littlechat.ui.chat.ChatFragment"
         android:label="chat_fragment"
         tools:layout="@layout/chat_fragment">
+        <argument
+            android:name="group_id"
+            app:argType="string" />
     </fragment>
 
     <navigation

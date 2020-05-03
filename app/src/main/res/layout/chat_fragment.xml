@@ -15,10 +15,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:menu="@menu/chat_actionbar_menu"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="@{viewModel.groupDisplayName}" />
 
 </FrameLayout>
 

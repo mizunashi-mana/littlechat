@@ -3,7 +3,7 @@ name: Android CI
 on: [push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -12,6 +12,15 @@ jobs:
     - uses: actions/setup-java@v1.3.0
       with:
         java-version: 1.8
-
+        
+    - uses: actions/cache@v1.1.2
+      with:
+        path: .gradle
+        key: ${{ runner.os }}-test-${{ env.cache-name }}-${{ hashFiles('**/build.gradle') }}
+        restore-keys: |
+          ${{ runner.os }}-test-${{ env.cache-name }}-
+          ${{ runner.os }}-test-
+          ${{ runner.os }}-
+        
     - name: Run test
       run: ./gradlew --no-daemon test

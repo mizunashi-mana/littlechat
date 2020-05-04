@@ -6,16 +6,10 @@ import com.example.littlechat.model.Token
 @Dao
 abstract class TokenDao {
     @Query("SELECT * FROM token LIMIT 1")
-    abstract suspend fun getToken(): Token?
+    abstract suspend fun get(): Token?
 
     @Query("SELECT * FROM token WHERE id = :tokenId")
-    abstract suspend fun getTokenById(tokenId: String): Token?
-
-    @Transaction
-    open suspend fun updateToken(token: Token) {
-        deleteAll()
-        insert(token)
-    }
+    abstract suspend fun getById(tokenId: String): Token?
 
     @Insert
     abstract suspend fun insert(token: Token)
@@ -23,6 +17,6 @@ abstract class TokenDao {
     @Delete
     abstract suspend fun delete(token: Token)
 
-    @Query("DELETE FROM token")
-    abstract suspend fun deleteAll()
+    @Query("DELETE FROM token WHERE id = :id")
+    abstract suspend fun deleteById(id: String)
 }

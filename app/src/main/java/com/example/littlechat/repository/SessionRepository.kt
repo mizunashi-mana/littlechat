@@ -61,7 +61,7 @@ class SessionRepositoryImpl @Inject constructor(
             expiredAt = jwtData.expiredAt,
             userId = jwtData.userId
         )
-        tokenDao.updateToken(token)
+        tokenDao.insert(token)
 
         return Session(
             token.id,
@@ -70,6 +70,8 @@ class SessionRepositoryImpl @Inject constructor(
     }
 
     override suspend fun clearSession() {
-        tokenDao.deleteAll()
+        currentTokenId?.let {
+            tokenDao.deleteById(it)
+        }
     }
 }

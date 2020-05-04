@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.littlechat.ui.chat.ChatViewModel
 import com.example.littlechat.ui.home.HomeViewModel
 import com.example.littlechat.ui.login.LoginViewModel
+import com.example.littlechat.ui.profile.ProfileViewModel
 import com.example.littlechat.ui.register.RegisterViewModel
 import dagger.MapKey
 import dagger.Module
 import dagger.Provides
-import java.lang.IllegalArgumentException
 import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.reflect.KClass
@@ -25,7 +25,8 @@ annotation class ViewModelKey(val value: KClass<out ViewModel>)
         LoginViewModel.ProviderModule::class,
         ChatViewModel.ProviderModule::class,
         HomeViewModel.ProviderModule::class,
-        RegisterViewModel.ProviderModule::class
+        RegisterViewModel.ProviderModule::class,
+        ProfileViewModel.ProviderModule::class
     ]
 )
 class ViewModelModule {

@@ -1,8 +1,7 @@
-package com.example.littlechat.ui.home
+package com.example.littlechat.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,29 +9,28 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.littlechat.MainNavigationDirections
 import com.example.littlechat.R
-import com.example.littlechat.databinding.HomeFragmentBinding
+import com.example.littlechat.databinding.ProfileFragmentBinding
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-class HomeFragment : DaggerFragment() {
+class ProfileFragment : DaggerFragment() {
     @Module
     abstract class InjectorModule {
         @Suppress("unused")
         @ContributesAndroidInjector
-        abstract fun contributeAndroidInjector(): HomeFragment
+        abstract fun contributeAndroidInjector(): ProfileFragment
     }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel: HomeViewModel by viewModels {
+    private val viewModel: ProfileViewModel by viewModels {
         viewModelFactory
     }
 
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: ProfileFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +38,7 @@ class HomeFragment : DaggerFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.home_fragment,
+            R.layout.profile_fragment,
             container,
             false
         )
@@ -54,29 +52,9 @@ class HomeFragment : DaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.toolbar.setOnMenuItemClickListener {
-            onOptionsItemSelected(it)
-        }
-
-        binding.buttonGotoNext.setOnClickListener {
+        binding.buttonLogout.setOnClickListener {
             findNavController()
-                .navigate(HomeFragmentDirections.actionChat("dummyGroupId"))
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.navigation_settings -> {
-                findNavController()
-                    .navigate(MainNavigationDirections.actionSettings())
-                true
-            }
-            R.id.navigation_profile -> {
-                findNavController()
-                    .navigate(MainNavigationDirections.actionProfile())
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+                .navigate(ProfileFragmentDirections.actionLogout())
         }
     }
 }

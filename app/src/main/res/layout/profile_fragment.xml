@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.profile.ProfileFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.example.littlechat.ui.home.HomeViewModel" />
+            type="com.example.littlechat.ui.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,17 +23,17 @@
             android:elevation="4dp"
             android:theme="@style/AppTheme.ActionBar"
             app:popupTheme="@style/AppTheme.ActionBarPopup"
-            app:menu="@menu/home_actionbar_menu"
+            app:menu="@menu/profile_actionbar_menu"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <Button
-            android:id="@+id/button_goto_next"
+            android:id="@+id/button_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="300dp"
-            android:text="Goto Next"
+            android:layout_marginBottom="224dp"
+            android:text="@string/action_logout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

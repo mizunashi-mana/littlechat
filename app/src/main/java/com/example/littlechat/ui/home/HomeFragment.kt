@@ -2,12 +2,15 @@ package com.example.littlechat.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.littlechat.MainNavigationDirections
 import com.example.littlechat.R
 import com.example.littlechat.databinding.HomeFragmentBinding
 import dagger.Module
@@ -41,6 +44,9 @@ class HomeFragment : DaggerFragment() {
             container,
             false
         )
+
+        binding.toolbar.setupWithNavController(findNavController())
+
         return binding.root
     }
 
@@ -48,8 +54,13 @@ class HomeFragment : DaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        binding.toolbar.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
+        }
+
         binding.buttonLogout.setOnClickListener {
-            afterLogout()
+            findNavController()
+                .navigate(HomeFragmentDirections.actionLogout())
         }
 
         binding.buttonGotoNext.setOnClickListener {
@@ -58,8 +69,14 @@ class HomeFragment : DaggerFragment() {
         }
     }
 
-    private fun afterLogout() {
-        findNavController()
-            .navigate(HomeFragmentDirections.actionLogout())
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.navigation_settings -> {
+                findNavController()
+                    .navigate(MainNavigationDirections.actionSettings())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

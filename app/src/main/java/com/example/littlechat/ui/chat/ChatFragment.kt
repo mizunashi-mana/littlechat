@@ -46,8 +46,7 @@ class ChatFragment : DaggerFragment() {
             false
         )
 
-        binding.toolbarContainer.mainToolbar
-            .setupWithNavController(findNavController())
+        binding.toolbar.setupWithNavController(findNavController())
 
         return binding.root
     }

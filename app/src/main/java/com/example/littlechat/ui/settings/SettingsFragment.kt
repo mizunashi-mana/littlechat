@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
@@ -28,15 +29,13 @@ class SettingsFragment : DaggerPreferenceFragmentCompat() {
         savedInstanceState: Bundle?
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState) ?: return null
+        val targetLayout = findTargetLayoutForToolbar(view)
 
-        val targetLayout = view.findViewById<View>(android.R.id.list_container)
-            ?.parent
-        if (targetLayout !is LinearLayout) {
-            println(targetLayout.toString())
-            throw RuntimeException("Expect preference linear layout")
-        }
-
-        val toolbar = layoutInflater.inflate(R.layout.settings_toolbar, targetLayout) as Toolbar
+        val toolbar = layoutInflater.inflate(
+            R.layout.settings_toolbar,
+            container,
+            false
+        ) as Toolbar
         targetLayout.addView(toolbar, 0)
         toolbar.setupWithNavController(findNavController())
 
@@ -45,5 +44,25 @@ class SettingsFragment : DaggerPreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
+    }
+
+    companion object {
+        private fun findTargetLayoutForToolbar(view: View): LinearLayout {
+            val container = view.findViewById<View>(android.R.id.list_container)
+                ?: throw RuntimeException("Expected preference view")
+
+            var target: LinearLayout? = null
+            var parent: ViewParent? = container.parent
+            while (parent != null) {
+                if (parent is LinearLayout) {
+                    target = parent
+                }
+
+                parent = parent.parent
+            }
+
+            return target
+                ?: throw RuntimeException("Expected preference view")
+        }
     }
 }

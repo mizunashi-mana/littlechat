@@ -21,9 +21,9 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:theme="@style/AppTheme.ActionBar"
+        app:popupTheme="@style/AppTheme.ActionBarPopup"
         app:menu="@menu/chat_actionbar_menu"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="@{viewModel.groupDisplayName}" />
 
 </FrameLayout>

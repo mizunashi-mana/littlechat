@@ -56,7 +56,6 @@ android {
 
     lintOptions {
         disable 'UnusedResources'
-        abortOnError false
     }
 }
 
@@ -83,7 +82,6 @@ dependencies {
     implementation "androidx.preference:preference:$versions.preference"
     implementation "androidx.room:room-runtime:$versions.room"
     implementation "androidx.room:room-ktx:$versions.room"
-    implementation "org.antlr:antlr4:4.7.1"
 
     testImplementation "junit:junit:$versions.junit"
 

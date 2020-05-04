@@ -53,11 +53,14 @@ android {
     kotlinOptions {
         jvmTarget = build_versions.jvm_target
     }
+
+    lintOptions {
+        disable 'UnusedResources'
+        abortOnError false
+    }
 }
 
 dependencies {
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     compileOnly "javax.annotation:javax.annotation-api:$versions.annotation"
 
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
@@ -80,6 +83,7 @@ dependencies {
     implementation "androidx.preference:preference:$versions.preference"
     implementation "androidx.room:room-runtime:$versions.room"
     implementation "androidx.room:room-ktx:$versions.room"
+    implementation "org.antlr:antlr4:4.7.1"
 
     testImplementation "junit:junit:$versions.junit"
 

@@ -36,7 +36,7 @@ class SettingsFragment : DaggerPreferenceFragmentCompat() {
             throw RuntimeException("Expect preference linear layout")
         }
 
-        val toolbar = layoutInflater.inflate(R.layout.settings_toolbar, null) as Toolbar
+        val toolbar = layoutInflater.inflate(R.layout.settings_toolbar, targetLayout) as Toolbar
         targetLayout.addView(toolbar, 0)
         toolbar.setupWithNavController(findNavController())
 

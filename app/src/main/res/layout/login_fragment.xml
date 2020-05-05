@@ -16,14 +16,14 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/input_user_id"
+        android:id="@+id/input_user"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_user_id"
-        android:autofillHints="@string/prompt_user_id"
+        android:hint="@string/prompt_user"
+        android:autofillHints="@string/prompt_user"
         android:inputType="text"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,19 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_user_id" />
+        app:layout_constraintTop_toBottomOf="@+id/input_user" />
+
+    <TextView
+        android:id="@+id/link_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+        android:clickable="true"
+        android:text="@string/label_or_register"
+        android:textColor="@color/colorLink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_login"
@@ -53,15 +65,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="64dp"
         android:enabled="@{viewModel.isDataValid()}"
         android:text="@string/action_login"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/link_register" />
 
     <ProgressBar
         android:id="@+id/login_loading"
@@ -78,18 +88,6 @@
         app:layout_constraintStart_toStartOf="@+id/input_password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
-
-    <TextView
-        android:id="@+id/link_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:clickable="true"
-        android:text="@string/label_or_register"
-        android:textColor="@color/colorLink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/button_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,9 +4,11 @@
     <string name="title_search">Search</string>
     <string name="title_settings">Settings</string>
     <string name="title_profile">Profile</string>
-    <string name="prompt_user_id">User ID or Email</string>
+    <string name="prompt_user">User ID or Email</string>
+    <string name="prompt_user_id">User ID</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_display_name">Display Name</string>
+    <string name="prompt_email">Email</string>
     <string name="prompt_message">Message</string>
     <string name="action_login">Login</string>
     <string name="action_logout">Logout</string>

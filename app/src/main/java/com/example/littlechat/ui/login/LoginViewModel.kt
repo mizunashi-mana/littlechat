@@ -29,12 +29,12 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     val errorPassword: LiveData<String?> = mutableErrorPassword
 
     fun loginDataChanged(
-        userId: String,
+        user: String,
         password: String
     ) {
         var isValid = true
 
-        if (userId.isBlank()) {
+        if (user.isBlank()) {
             isValid = false
         }
 

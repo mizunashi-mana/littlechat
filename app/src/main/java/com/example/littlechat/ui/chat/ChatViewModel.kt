@@ -19,13 +19,13 @@ class ChatViewModel @Inject constructor() : ViewModel() {
 
     private lateinit var navArgs: ChatFragmentArgs
 
-    val groupId: String
-        get() = navArgs.groupId
+    val roomId: String
+        get() = navArgs.roomId
 
-    lateinit var groupDisplayName: String
+    lateinit var roomDisplayName: String
 
     fun setNavArgs(args: ChatFragmentArgs) {
         navArgs = args
-        groupDisplayName = groupId
+        roomDisplayName = roomId
     }
 }

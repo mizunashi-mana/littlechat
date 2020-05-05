@@ -7,9 +7,11 @@
     <string name="prompt_user_id">User ID or Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_display_name">Display Name</string>
+    <string name="prompt_message">Message</string>
     <string name="action_login">Login</string>
     <string name="action_logout">Logout</string>
     <string name="action_register">Register</string>
+    <string name="action_send_message">Send</string>
     <string name="login_failed">Login failed</string>
     <string name="label_or_register"><u>Or register new account</u></string>
     <string name="label_or_login"><u>Or login already existed account</u></string>

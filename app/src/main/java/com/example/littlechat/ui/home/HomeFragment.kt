@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -33,6 +34,7 @@ class HomeFragment : DaggerFragment() {
     }
 
     private lateinit var binding: HomeFragmentBinding
+    private lateinit var adapter: RoomListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +49,12 @@ class HomeFragment : DaggerFragment() {
 
         binding.toolbar.setupWithNavController(findNavController())
 
+        adapter = RoomListAdapter { room ->
+            findNavController()
+                .navigate(HomeFragmentDirections.actionChat(room.id))
+        }
+        binding.roomListView.adapter = adapter
+
         return binding.root
     }
 
@@ -54,13 +62,15 @@ class HomeFragment : DaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        viewModel.rooms.observe(
+            viewLifecycleOwner,
+            Observer { rooms ->
+                adapter.submitList(rooms ?: emptyList())
+            }
+        )
+
         binding.toolbar.setOnMenuItemClickListener {
             onOptionsItemSelected(it)
-        }
-
-        binding.buttonGotoNext.setOnClickListener {
-            findNavController()
-                .navigate(HomeFragmentDirections.actionChat("dummyGroupId"))
         }
     }
 

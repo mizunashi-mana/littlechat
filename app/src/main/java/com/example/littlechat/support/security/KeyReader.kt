@@ -9,18 +9,40 @@ import java.security.spec.X509EncodedKeySpec
 import java.util.*
 
 object KeyReader {
+    private fun isNewlineByte(b: Byte): Boolean {
+        return when (b) {
+            '\n'.toByte() ->
+                true
+            else ->
+                false
+        }
+    }
+
+    private fun isWhitespaceByte(b: Byte): Boolean {
+        return when (b) {
+            '\n'.toByte() ->
+                true
+            ' '.toByte() ->
+                true
+            '\t'.toByte() ->
+                true
+            else ->
+                false
+        }
+    }
+
     private fun stripHeaderFooter(content: ByteArray): ByteArray {
         val out = ByteArrayOutputStream()
 
         var startOffset = 0
         while (
             startOffset < content.size &&
-            content[startOffset] == '\n'.toByte()
+            isWhitespaceByte(content[startOffset])
         ) {
             startOffset += 1
         }
         while (startOffset < content.size) {
-            if (content[startOffset] == '\n'.toByte()) {
+            if (isNewlineByte(content[startOffset])) {
                 startOffset += 1
                 break
             }
@@ -31,12 +53,12 @@ object KeyReader {
         var endOffset = content.size - 1
         while (
             0 <= endOffset &&
-            content[endOffset] == '\n'.toByte()
+            isWhitespaceByte(content[endOffset])
         ) {
             endOffset -= 1
         }
         while (0 <= endOffset) {
-            if (content[endOffset] == '\n'.toByte()) {
+            if (isNewlineByte(content[endOffset])) {
                 endOffset -= 1
                 break
             }
@@ -48,19 +70,15 @@ object KeyReader {
             startOffset,
             endOffset - startOffset
         )
-        while (true) {
+        do {
             val b = input.read()
 
-            if (b == -1) {
-                break
-            }
+            if (b == -1) break
 
-            if (b == '\n'.toInt()) {
-                continue
-            }
+            if (isWhitespaceByte(b.toByte())) continue
 
             out.write(b)
-        }
+        } while (true)
 
         return out.toByteArray()
     }
@@ -69,22 +87,12 @@ object KeyReader {
      * @throws InvalidKeySpecException
      * @throws IllegalArgumentException
      */
-    fun readPublicKeyWithException(content: ByteArray): PublicKey {
+    fun readPublicKey(content: ByteArray): PublicKey {
         val keyContent = Base64.getDecoder().decode(
             stripHeaderFooter(content)
         )
         val spec = X509EncodedKeySpec(keyContent)
         val kf = KeyFactory.getInstance("RSA")
         return kf.generatePublic(spec)
-    }
-
-    fun readPublicKey(content: ByteArray): PublicKey? {
-        return try {
-            readPublicKeyWithException(content)
-        } catch (e: IllegalArgumentException) {
-            null
-        } catch (e: InvalidKeySpecException) {
-            null
-        }
     }
 }

@@ -1,0 +1,56 @@
+plugins {
+    id 'application'
+    id 'kotlin'
+    id 'kotlin-kapt'
+    id 'idea'
+    id 'com.google.protobuf'
+    id 'jacoco'
+}
+
+application {
+    mainClassName = 'com.example.littlechat.server.MainKt'
+}
+
+sourceSets {
+    main.java.srcDirs += common_dirs.java
+    main.proto.srcDirs += common_dirs.proto
+}
+
+dependencies {
+    compileOnly "javax.annotation:javax.annotation-api:$versions.annotation"
+    compileOnly "io.jsonwebtoken:jjwt-api:$versions.jjwt"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    implementation "com.google.protobuf:protobuf-java:$versions.protobuf"
+    implementation "com.google.protobuf:protobuf-java-util:$versions.protobuf"
+    implementation "io.grpc:grpc-netty-shaded:$versions.grpc_java"
+    implementation "io.grpc:grpc-protobuf:$versions.grpc_java"
+    implementation "io.grpc:grpc-stub:$versions.grpc_java"
+    implementation "io.grpc:grpc-kotlin-stub:$versions.grpc_kotlin"
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$versions.protobuf"
+    }
+
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$versions.grpc_java"
+        }
+
+        grpckt {
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:$versions.grpc_kotlin"
+        }
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                grpc { }
+                grpckt { }
+            }
+        }
+    }
+}

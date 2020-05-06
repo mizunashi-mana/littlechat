@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.protobuf'
     id 'jacoco'
 }
 
@@ -27,7 +28,6 @@ android {
                 ]
             }
         }
-
     }
 
     buildTypes {
@@ -39,6 +39,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += common_dirs.java
+        main.proto.srcDirs += common_dirs.proto
     }
 
     dataBinding {
@@ -60,11 +61,12 @@ android {
 }
 
 dependencies {
-    compileOnly "javax.annotation:javax.annotation-api:$versions.annotation"
-
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
     kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
     kapt "androidx.room:room-compiler:$versions.room"
+
+    compileOnly "javax.annotation:javax.annotation-api:$versions.annotation"
+    compileOnly "io.jsonwebtoken:jjwt-api:$versions.jjwt"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "io.arrow-kt:arrow-syntax:$versions.arrow"
@@ -82,9 +84,42 @@ dependencies {
     implementation "androidx.preference:preference:$versions.preference"
     implementation "androidx.room:room-runtime:$versions.room"
     implementation "androidx.room:room-ktx:$versions.room"
+    implementation "io.grpc:grpc-okhttp:$versions.grpc_java"
+    implementation "io.grpc:grpc-protobuf-lite:$versions.grpc_java"
+    implementation "io.grpc:grpc-stub:$versions.grpc_java"
+
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:$versions.jjwt"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:$versions.jjwt"
 
     testImplementation "junit:junit:$versions.junit"
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$versions.protobuf"
+    }
+
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$versions.grpc_java"
+        }
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+            task.plugins {
+                grpc {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package com.example.littlechat.proto;
+
+import "common.proto";
+
+service AuthService {
+    rpc Auth (ApiAuth.Request) returns (ApiAuth.Response) {}
+    rpc Register (ApiRegister.Request) returns (ApiRegister.Response) {}
+}
+
+message ApiAuth {
+    message Request {
+        string userIdentifier = 1;
+        string password = 2;
+    }
+
+    message Response {
+        ResponseCommon common = 1;
+        oneof body {
+            OkBody okBody = 2;
+            ErrorBody errorBody = 3;
+        }
+    }
+
+    message OkBody {
+        string token = 1;
+    }
+
+    message ErrorBody {
+        string message = 1;
+    }
+}
+
+message ApiRegister {
+    message Request {
+        string userId = 1;
+        string password = 2;
+        string displayName = 3;
+        string email = 4;
+    }
+
+    message Response {
+        ResponseCommon common = 1;
+        oneof body {
+            OkBody okBody = 2;
+            ErrorBody errorBody = 3;
+        }
+    }
+
+    message OkBody {
+        string token = 1;
+    }
+
+    message ErrorBody {
+        string message = 1;
+    }
+}

@@ -49,7 +49,7 @@ class LoginFragment : DaggerFragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.inputUser.addTextChangedListener {
+        binding.inputUserIdentifier.addTextChangedListener {
             afterInputChanged()
         }
 
@@ -69,7 +69,7 @@ class LoginFragment : DaggerFragment() {
 
     private fun afterInputChanged() {
         viewModel.loginDataChanged(
-            binding.inputUser.text.toString(),
+            binding.inputUserIdentifier.text.toString(),
             binding.inputPassword.text.toString()
         )
     }

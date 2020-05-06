@@ -13,6 +13,7 @@ buildscript {
             kotlin: '1.3.72',
             coroutines: '1.3.3',
             arrow: '0.10.5',
+            android_gradle: '3.6.3',
             dagger: '2.27',
             appcompat: '1.1.0',
             lifecycle: '2.2.0',
@@ -21,11 +22,17 @@ buildscript {
             constraintlayout: '1.1.3',
             preference: '1.1.1',
             room: '2.2.5',
+            jjwt: '0.11.1',
+            protobuf: '3.11.1',
+            protobuf_gradle: '0.8.12',
+            grpc_java: '1.28.1',
+            grpc_kotlin: '0.1.1',
             junit: '4.12',
         ]
 
         common_dirs = [
-            java: project.file('common/java')
+            java: project.file('common/java'),
+            proto: project.file('common/proto'),
         ]
 
         build_versions = [
@@ -45,9 +52,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath "com.android.tools.build:gradle:$versions.android_gradle"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
+        classpath "com.google.protobuf:protobuf-gradle-plugin:$versions.protobuf_gradle"
     }
 }
 

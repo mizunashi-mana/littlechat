@@ -2,12 +2,16 @@ package com.example.littlechat.repository
 
 import androidx.lifecycle.LiveData
 import com.example.littlechat.jwt.JwtData
+import com.example.littlechat.jwt.parseJwtData
 import com.example.littlechat.model.Session
 import com.example.littlechat.model.Token
 import com.example.littlechat.repository.db.SessionDao
 import com.example.littlechat.repository.db.TokenDao
 import com.example.littlechat.repository.db.UserDao
-import java.util.*
+import io.jsonwebtoken.JwtParser
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.RequiredTypeException
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 interface SessionRepository {
@@ -23,18 +27,22 @@ interface SessionRepository {
 class SessionRepositoryImpl @Inject constructor(
     private val userDao: UserDao,
     private val tokenDao: TokenDao,
-    private val sessionDao: SessionDao
+    private val sessionDao: SessionDao,
+    settingsRepository: SettingsRepository
 ): SessionRepository {
+    private val jwtParser: JwtParser = Jwts
+        .parserBuilder()
+        .setSigningKey(settingsRepository.jwtSigningKey)
+        .build()
+
     private var currentTokenId: String? = null
 
     private fun parseTokenString(tokenString: String): JwtData {
-        return JwtData(
-            id = tokenString,
-            issuer = "dummy",
-            issuedAt = Date(),
-            expiredAt = Date(System.currentTimeMillis() + 100000L),
-            userId = "dummyUser"
-        )
+        try {
+            return jwtParser.parseJwtData(tokenString)
+        } catch (e: RequiredTypeException) {
+            throw RuntimeException(e)
+        }
     }
 
     override fun loadCurrentSession(): LiveData<Session?> {

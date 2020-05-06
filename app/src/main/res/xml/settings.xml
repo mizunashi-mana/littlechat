@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <settings>
+    <apiEndpoint>http://10.0.2.2:5000</apiEndpoint>
     <key>
         -----BEGIN X.509 PUBLIC KEY-----
         MIIJRAIBADANBgkqhkiG9w0BAQEFAASCCS4wggkqAgEAAoICAQCjAuNP8IabjnDn
